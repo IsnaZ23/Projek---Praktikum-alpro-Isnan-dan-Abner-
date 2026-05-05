@@ -23,12 +23,16 @@ void aturAkun(){
 //===================
 player userAktif;  //|
 //===================
+string namaFile;  //|
+string namaplayer;//|
+FILE *pf;         //|
+//===================
 
 void lihatInventory() {
     bool isinya = false;
 
-    cout <<"Isi Tas "<<userAktif.username<<"\n";
-    cout << "\n---------------------------------------------------------------" << endl;
+    cout <<"Isi Tas "<<userAktif.username<<" : \n";
+    cout << "---------------------------------------------------------------" << endl;
     cout << " No | "<< left << setw(18)<<"Nama Item "<<"| Jumlah | Durabilty  " << endl;
     cout << "-----------------------------------------------------------------" << endl;
     for (int i = 0; i < 36; i++){
@@ -48,31 +52,40 @@ void lihatInventory() {
 };
 
 void tambahItem() {
-    int jumlahInput;
-    cout << "\n=== TAMBAH ITEM KE INVENTORY === " << endl;
-    cout << "Berapa banyak slot yang ingin diisi ? ";
-    cin >> jumlahInput;
-    if (jumlahInput < 1 || jumlahInput > 36){
-        cout<<"jumlah Tidak valid (jumlah maksimal 36 slot) ! \n";
+    int slot;
+    cout << "\n=== TAMBAH ITEM KE 36 slot INVENTORY === " << endl;
+    cout << "pilih nomor slot ke berapa :  ";
+    cin >> slot;
+
+    if (slot < 1 || slot > 36){
+        cout<<"jumlah slot Tidak valid (jumlah maksimal 36 slot) ! \n";
     }else{
-        for (int i = 0; i < jumlahInput; i++){
-            cout<<"\nData untuk slot ke-"<<i + 1<<" : "<<endl;
-            cout<<"Masukkan Nama Item ('_' sebagai sepasi) : ";
-            cin>>userAktif.backpack[i].nama;
-            cout<<"Masukkan jumlah : ";
-            cin>>userAktif.backpack[i].jumlah;
-            cout<<"Masukkan berapa jumlah durability : ";
-            cin>>userAktif.backpack[i].durability;
+        cout << "Mengisi Slot Nomor " << slot << endl;
+        int i = slot - 1;
+
+        cout << "Masukkan Nama Item ('_' sebagai spasi) : ";
+        cin >> userAktif.backpack[i].nama;
+        cout << "Masukkan jumlah : ";
+        cin >> userAktif.backpack[i].jumlah;
+        cout << "Masukkan berapa jumlah durability : ";
+        cin >> userAktif.backpack[i].durability;
         }
-        cout<<"\n Berhasil mengisi jumlah slot ! "<<endl;
-    }
+        cout<<"\n Berhasil mengisi slot nomor "<<slot<<endl;
 };
+
+void save(){
+    cout<<"Terimakasih! \n";
+    pf = fopen(namaFile.c_str(),"wb");
+    if (pf != NULL){
+        fwrite(&userAktif, sizeof(userAktif), 1, pf);
+        fclose(pf);
+        cout<<"data berhasil di simpan ke file! "<<endl;
+    }
+}
 
 int main() {
     bool login = false;
     int pilih;
-    string namaplayer;
-    FILE *pf;
 
     cout<<"===== MINECRAFT INVENTORY SYSTEM===== \n"
         <<"1. Bikin Akun baru (buat tas baru) \n"
@@ -83,7 +96,7 @@ int main() {
     
     cout<<"Masukkan Nama Player: ";
     getline(cin, namaplayer);
-    string namaFile = namaplayer + ".dat";
+    namaFile = namaplayer + ".dat";
 
 
     switch (pilih){
@@ -125,7 +138,7 @@ int main() {
     if (login){
         int menu;
         do{
-            cout<<"\n === Menu Inventory "<<userAktif.username<<" ! === \n"
+            cout<<"\n=== Menu Inventory "<<userAktif.username<<" ! === \n"
                 <<"1. Lihat Inventory \n"
                 <<"2. Tambah Item \n"
                 <<"3. Cari item (Searching) \n"
@@ -136,19 +149,22 @@ int main() {
         
             switch (menu){
 
-            case 1:
-            lihatInventory();
+            case 1: 
+                lihatInventory();
+            break;
+            case 2: 
+                tambahItem();
+                save();
             break;
 
-            case 2:
-            tambahItem();
-            pf = fopen(namaFile.c_str(),"wb");
-            if (pf != NULL){
-                fwrite(&userAktif, sizeof(userAktif), 1, pf);
-                fclose(pf);
-                cout<<"data berhasil di simpan ke file! "<<endl;
-            }
-            
+            case 3:
+            break;
+
+            case 4:
+            break;
+
+            case 5:
+                save();
             break;
         
             default:
