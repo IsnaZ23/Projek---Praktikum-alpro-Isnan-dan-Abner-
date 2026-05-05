@@ -78,7 +78,25 @@ int main() {
     if (login){
         int menu;
         do{
+            cout<<"\n === Menu Inventory "<<userAktif.username<<" === \n"
+                <<"1. Lihat Inventory \n"
+                <<"2. Tambah Item \n"
+                <<"3. Cari item (Searching) \n"
+                <<"4. Merapikan Tas (Sorting) \n"
+                <<"5. Keluar dan simpan akun \n"
+                <<"Pilih 1-5 :";
+            cin >>menu;
+        
+            switch (menu){
+
+            case 1:
             
+            break;
+        
+            default:
+        
+            break;
+            }
         } while (menu != 5);
         
     }
