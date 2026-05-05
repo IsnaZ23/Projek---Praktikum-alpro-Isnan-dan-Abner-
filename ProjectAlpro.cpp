@@ -56,7 +56,7 @@ void tambahItem() {
         cout<<"jumlah Tidak valid (jumlah maksimal 36 slot) ! \n";
     }else{
         for (int i = 0; i < jumlahInput; i++){
-            cout<<"\n Data untuk slot ke-"<<i + 1<<" : ";
+            cout<<"\nData untuk slot ke-"<<i + 1<<" : "<<endl;
             cout<<"Masukkan Nama Item ('_' sebagai sepasi) : ";
             cin>>userAktif.backpack[i].nama;
             cout<<"Masukkan jumlah : ";
@@ -94,7 +94,7 @@ int main() {
             for (int i = 0; i < 36; i++){
                 strcpy(userAktif.backpack[i].nama, "-");
                 userAktif.backpack[i].jumlah = 0;
-                userAktif.backpack[i].durability;
+                userAktif.backpack[i].durability = 0;
             }
 
             fwrite(&userAktif, sizeof(userAktif), 1, pf);
@@ -142,6 +142,13 @@ int main() {
 
             case 2:
             tambahItem();
+            pf = fopen(namaFile.c_str(),"wb");
+            if (pf != NULL){
+                fwrite(&userAktif, sizeof(userAktif), 1, pf);
+                fclose(pf);
+                cout<<"data berhasil di simpan ke file! "<<endl;
+            }
+            
             break;
         
             default:
