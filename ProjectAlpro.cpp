@@ -1,6 +1,6 @@
 #include <iostream>
+#include <string>
 #include <string.h>
-#include <fstream>
 #include <stdlib.h>
 #include <stdio.h>
 using namespace std;
@@ -56,10 +56,19 @@ int main() {
     break;
     
     case 2 :
-
+        pf = fopen(namaFile.c_str(), "rb");
+        if(pf != NULL){
+            fread(&userAktif, sizeof(userAktif), 1, pf);
+            fclose(pf);
+            cout<<"Berhasil login selamat datang "<<userAktif.username<<endl;
+        }else{
+            cout<<"Akun tidak ditemukan ! silahkan bikin akun terlebih dahulu. "<<endl;
+        }
     break;
+
     default:
-        break;
+    cout << "Pilihan tidak valid!" << endl;
+    break;
     }
 
     return 0;
