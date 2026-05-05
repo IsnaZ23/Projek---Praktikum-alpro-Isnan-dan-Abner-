@@ -1,11 +1,11 @@
 #include <iostream>
-#include <string>
+#include <string.h>
 #include <fstream>
 #include <stdlib.h>
 #include <stdio.h>
 using namespace std;
 struct item{
-    string nama;
+    char nama[50];
     int jumlah;
     int durability;
 };
@@ -16,6 +16,9 @@ struct player{
     
 };
 
+void aturAkun(){
+
+} 
 player userAktif;
 int main() {
     int pilih;
@@ -33,16 +36,28 @@ int main() {
     getline(cin, namaplayer);
     string namaFile = namaplayer + ".dat";
 
+
     switch (pilih){
     case 1:
-        FILE *pf = fopen(namaFile.c_str(), "wb");
+        pf = fopen(namaFile.c_str(), "wb");
         if (pf != NULL){
+            strcpy(userAktif.username, namaplayer.c_str());
+            for (int i = 0; i < 36; i++){
+                strcpy(userAktif.backpack[i].nama, "-");
+                userAktif.backpack[i].jumlah = 0;
+                userAktif.backpack[i].durability;
+            }
+
             fwrite(&userAktif, sizeof(userAktif), 1, pf);
             fclose(pf);
-            cout<<"Akun "<<namaFile<<" telah dibuat! ";
+            cout<<"Akun berhasil dibuat dengan nama file "<<namaFile<<endl;
+            
         }
     break;
     
+    case 2 :
+
+    break;
     default:
         break;
     }
