@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <string.h>
 #include <stdlib.h>
@@ -22,6 +23,51 @@ void aturAkun(){
 //===================
 player userAktif;  //|
 //===================
+
+void lihatInventory() {
+    bool isinya = false;
+
+    cout <<"Isi Tas "<<userAktif.username<<"\n";
+    cout << "\n---------------------------------------------------------------" << endl;
+    cout << " No | "<< left << setw(18)<<"Nama Item "<<"| Jumlah | Durabilty  " << endl;
+    cout << "-----------------------------------------------------------------" << endl;
+    for (int i = 0; i < 36; i++){
+        if (strcmp(userAktif.backpack[i].nama, "-") != 0){
+            cout << " " <<left << setw(2)<<i<<" | "
+                 <<left<< setw(18) <<userAktif.backpack[i].nama<<" | "
+                 <<left<< setw(3)  <<userAktif.backpack[i].jumlah<<" | "
+                 <<userAktif.backpack[i].durability<<endl;
+            isinya = true;
+        }
+    }
+
+    if (!isinya){
+        cout<<" Tas anda masih kosong ! "<<endl;
+    }
+    cout << "\n---------------------------------------------------------------" << endl;
+};
+
+void tambahItem() {
+    int jumlahInput;
+    cout << "\n=== TAMBAH ITEM KE INVENTORY === " << endl;
+    cout << "Berapa banyak slot yang ingin diisi ? ";
+    cin >> jumlahInput;
+    if (jumlahInput < 1 || jumlahInput > 36){
+        cout<<"jumlah Tidak valid (jumlah maksimal 36 slot) ! \n";
+    }else{
+        for (int i = 0; i < jumlahInput; i++){
+            cout<<"\n Data untuk slot ke-"<<i + 1<<" : ";
+            cout<<"Masukkan Nama Item ('_' sebagai sepasi) : ";
+            cin>>userAktif.backpack[i].nama;
+            cout<<"Masukkan jumlah : ";
+            cin>>userAktif.backpack[i].jumlah;
+            cout<<"Masukkan berapa jumlah durability : ";
+            cin>>userAktif.backpack[i].durability;
+        }
+        cout<<"\n Berhasil mengisi jumlah slot ! "<<endl;
+    }
+};
+
 int main() {
     bool login = false;
     int pilih;
@@ -64,6 +110,7 @@ int main() {
             fread(&userAktif, sizeof(userAktif), 1, pf);
             fclose(pf);
             cout<<"Berhasil login selamat datang "<<userAktif.username<<" !"<<endl;
+            login = true;
         }else{
             cout<<"Akun tidak ditemukan ! silahkan bikin akun terlebih dahulu. "<<endl;
             login = false;
@@ -78,7 +125,7 @@ int main() {
     if (login){
         int menu;
         do{
-            cout<<"\n === Menu Inventory "<<userAktif.username<<" === \n"
+            cout<<"\n === Menu Inventory "<<userAktif.username<<" ! === \n"
                 <<"1. Lihat Inventory \n"
                 <<"2. Tambah Item \n"
                 <<"3. Cari item (Searching) \n"
@@ -90,7 +137,11 @@ int main() {
             switch (menu){
 
             case 1:
-            
+            lihatInventory();
+            break;
+
+            case 2:
+            tambahItem();
             break;
         
             default:
