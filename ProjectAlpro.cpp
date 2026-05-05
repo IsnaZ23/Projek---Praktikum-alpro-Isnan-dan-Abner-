@@ -35,7 +35,12 @@ int main() {
 
     switch (pilih){
     case 1:
-        
+        FILE *pf = fopen(namaFile.c_str(), "wb");
+        if (pf != NULL){
+            fwrite(&userAktif, sizeof(userAktif), 1, pf);
+            fclose(pf);
+            cout<<"Akun "<<namaFile<<" telah dibuat! ";
+        }
     break;
     
     default:
