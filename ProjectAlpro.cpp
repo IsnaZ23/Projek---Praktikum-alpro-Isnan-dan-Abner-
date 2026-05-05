@@ -19,8 +19,11 @@ struct player{
 void aturAkun(){
 
 } 
-player userAktif;
+//===================
+player userAktif;  //|
+//===================
 int main() {
+    bool login = false;
     int pilih;
     string namaplayer;
     FILE *pf;
@@ -50,8 +53,8 @@ int main() {
 
             fwrite(&userAktif, sizeof(userAktif), 1, pf);
             fclose(pf);
-            cout<<"Akun berhasil dibuat dengan nama file "<<namaFile<<endl;
-            
+            cout<<"Akun berhasil dibuat dengan nama "<<namaFile<<endl;
+            login = true;
         }
     break;
     
@@ -60,9 +63,10 @@ int main() {
         if(pf != NULL){
             fread(&userAktif, sizeof(userAktif), 1, pf);
             fclose(pf);
-            cout<<"Berhasil login selamat datang "<<userAktif.username<<endl;
+            cout<<"Berhasil login selamat datang "<<userAktif.username<<" !"<<endl;
         }else{
             cout<<"Akun tidak ditemukan ! silahkan bikin akun terlebih dahulu. "<<endl;
+            login = false;
         }
     break;
 
@@ -70,6 +74,15 @@ int main() {
     cout << "Pilihan tidak valid!" << endl;
     break;
     }
+
+    if (login){
+        int menu;
+        do{
+            
+        } while (menu != 5);
+        
+    }
+    
 
     return 0;
 }
