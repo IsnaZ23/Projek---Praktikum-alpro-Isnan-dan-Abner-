@@ -38,9 +38,9 @@ void lihatInventory() {
     for (int i = 0; i < 36; i++){
         if (strcmp(userAktif.backpack[i].nama, "-") != 0){
             cout << " " <<left << setw(2)<<i<<" | "
-                 <<left<< setw(18) <<userAktif.backpack[i].nama<<" | "
-                 <<left<< setw(3)  <<userAktif.backpack[i].jumlah<<" | "
-                 <<userAktif.backpack[i].durability<<endl;
+                <<left<< setw(18) <<userAktif.backpack[i].nama<<" | "
+                <<left<< setw(3)  <<userAktif.backpack[i].jumlah<<" | "
+                <<userAktif.backpack[i].durability<<endl;
             isinya = true;
         }
     }
@@ -157,7 +157,7 @@ int main() {
                 save();
             break;
 
-            case 3:
+            case 3: // Searching item sepuh isnan
             break;
 
             case 4:
