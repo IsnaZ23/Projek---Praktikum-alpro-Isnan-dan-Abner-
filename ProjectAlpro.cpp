@@ -73,6 +73,51 @@ void tambahItem() {
         cout<<"\n Berhasil mengisi slot nomor "<<slot<<endl;
 };
 
+void cariItem() {
+    string namaItem;    
+    cout << "\n=== CARI ITEM DI INVENTORY === " << endl;
+    cout << "Masukkan nama item yang ingin dicari : ";
+    cin >> namaItem;
+
+    // simpan item terakhir yang di cari
+    item tempTerakhir = userAktif.backpack[35];
+    
+    // Sentinel search
+    strcpy(userAktif.backpack[35].nama, "\0"); // Set sentinel
+    int i = 0;
+    while (strcmp(userAktif.backpack[i].nama, namaItem.c_str()) != 0){
+        i++;
+    }
+
+    userAktif.backpack[35] = tempTerakhir; // Kembalikan item terakhir ke slot 36
+
+    if (i < 35){
+        cout << "Item '" << namaItem << "' ditemukan di slot nomor " << i + 1 << endl;
+        cout << "Jumlah: " << userAktif.backpack[i].jumlah << ", Durability: " << userAktif.backpack[i].durability << endl;
+    } else {
+        cout << "Item '" << namaItem << "' tidak ditemukan!" << endl;
+    }
+
+}
+
+void urutkanInventory() {
+    cout << "\nMerapikan Inventory...." << endl;
+    for (int i = 0; i < 35; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < 36; j++) {
+            if (strcmp(userAktif.backpack[j].nama, userAktif.backpack[minIndex].nama) < 0) {
+                minIndex = j;
+            }
+        }
+        // Tukar item
+        item temp = userAktif.backpack[i];
+        userAktif.backpack[i] = userAktif.backpack[minIndex];
+        userAktif.backpack[minIndex] = temp;
+    }
+    cout << "Tas berhasil diurutkan berdasarkan nama item!" << endl;
+    save();
+};
+
 void save(){
     cout<<"Terimakasih! \n";
     pf = fopen(namaFile.c_str(),"wb");
@@ -157,10 +202,13 @@ int main() {
                 save();
             break;
 
-            case 3: // Searching item sepuh isnan
+            case 3: 
+                cariItem();
             break;
 
             case 4:
+                urutkanInventory();
+                lihatInventory();
             break;
 
             case 5:
