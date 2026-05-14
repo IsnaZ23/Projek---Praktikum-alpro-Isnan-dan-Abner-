@@ -100,23 +100,36 @@ void cariItem() {
 
 }
 
-void urutkanInventory() {
-    cout << "\nMerapikan Inventory...." << endl;
-    for (int i = 0; i < 35; i++) {
-        int minIndex = i;
-        for (int j = i + 1; j < 36; j++) {
-            if (strcmp(userAktif.backpack[j].nama, userAktif.backpack[minIndex].nama) < 0) {
-                minIndex = j;
+//  Sorting 
+void bubbleSort() {
+    cout << "\n=== MERAPIKAN INVENTORY DENGAN BUBBLE SORT === " << endl;
+    for (int i = 0; i < 35; i++){
+        for (int j = 0; j < 35 - i - 1; j++){
+            if (strcmp(userAktif.backpack[j].nama, userAktif.backpack[j + 1].nama) > 0){
+                item temp = userAktif.backpack[j];
+                userAktif.backpack[j] = userAktif.backpack[j + 1];
+                userAktif.backpack[j + 1] = temp;
             }
         }
-        // Tukar item
-        item temp = userAktif.backpack[i];
-        userAktif.backpack[i] = userAktif.backpack[minIndex];
-        userAktif.backpack[minIndex] = temp;
     }
-    cout << "Tas berhasil diurutkan berdasarkan nama item!" << endl;
-    save();
-};
+    cout << "Inventory berhasil dirapikan dengan Bubble Sort!" << endl;
+}
+
+void shellSort() {
+    cout << "\n=== MERAPIKAN INVENTORY DENGAN SHELL SORT === " << endl;
+    int n = 36;
+    for (int gap = n / 2; gap > 0; gap /= 2){
+        for (int i = gap; i < n; i++){
+            item temp = userAktif.backpack[i];
+            int j;
+            for (j = i; j >= gap && strcmp(userAktif.backpack[j - gap].nama, temp.nama) > 0; j -= gap){
+                userAktif.backpack[j] = userAktif.backpack[j - gap];
+            }
+            userAktif.backpack[j] = temp;
+        }
+    }
+    cout << "Inventory berhasil dirapikan dengan Shell Sort!" << endl;
+}
 
 void save(){
     cout<<"Terimakasih! \n";
@@ -207,8 +220,20 @@ int main() {
             break;
 
             case 4:
-                urutkanInventory();
-                lihatInventory();
+                int sortChoice;
+                cout << "\n Pilih metode sorting: \n1. Bubble Sort\n2. Shell Sort\nPilih (1-2): ";
+                cin >> sortChoice;
+
+                if (sortChoice == 1){
+                    bubbleSort();
+                } else if (sortChoice == 2){
+                    shellSort();
+                } else {
+                    cout << "Pilihan tidak ada!" << endl;
+                    break;
+                }
+            save();
+            lihatInventory();
             break;
 
             case 5:
