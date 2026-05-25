@@ -31,12 +31,15 @@ void buatAkunBaru(player *plr, bool *status, string nf, string np){
     int i;
     ofstream fileTulis(nf, ios::out | ios::binary);
     if (fileTulis.is_open()){
-        strcpy(plr->username,np.c_str());
+        strncpy(plr->username,np.c_str(), 29);
+        plr->username[29] = '\0';
+
         for (i = 0; i < 36; i++){
             strcpy(plr->backpack[i].nama,"-");
             plr->backpack[i].jumlah = 0;
             plr->backpack[i].durability = 0;
         }
+        
         fileTulis.write((char*)plr, sizeof(player));
         fileTulis.close();
     cout<<"Akun berhasil dibuat ! \n";
@@ -179,9 +182,8 @@ void BubbleSort(player *plr){
             if (tukarDulu(plr->backpack[j], plr->backpack[j+1]))
             {
                 item temp = plr->backpack[j];
-
-                plr->backpack[j] = plr->backpack[j + i];
-                plr->backpack[j + 1] =temp;
+                plr->backpack[j] = plr->backpack[j + 1];
+                plr->backpack[j + 1] = temp;
             }
         }
     }
@@ -239,6 +241,7 @@ int main() {
         
         default:
         cout << "Pilihan tidak valid!" << endl;
+        return 0;
         break;
     }
 
@@ -268,13 +271,15 @@ do{
                 cariItem(&userAktif);
             break;
 
-            case 4:
+            case 4:{
             int pilihSort;
                 cout<<"Urutkan item berdasarkan jumlah : \n"
                     <<"1. Bubble sort \n"
                     <<"2. Shell sort \n";
                 cout<<"pilih No 1-2 : ";
                 cin>>pilihSort;
+                cin.ignore();
+
                 if (pilihSort == 1){
                     BubbleSort(&userAktif);
                 }else if(pilihSort == 2){
@@ -285,6 +290,7 @@ do{
                 save(&userAktif, namaFile);
                 cout<<"\nSetelah item diurutkan : \n";
                 lihatInventory(&userAktif);
+            }
             break;
 
             case 5:
@@ -301,7 +307,7 @@ do{
         loading();
         if (mau == 'n' || mau == 'N'){
             save(&userAktif, namaFile);
-        cout<<"Akun disimpan , Terimakasih "<<userAktif.username<<" !\n";
+            cout<<"Akun disimpan , Terimakasih "<<userAktif.username<<" !\n";
         }
         
 } while (mau == 'y' || mau == 'Y');
