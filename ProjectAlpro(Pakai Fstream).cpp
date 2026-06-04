@@ -167,9 +167,11 @@ void cariItem(player *plr)
     string namaCari;
     cout << "\n=== Cari Item Di inventory === \n"
          << "Masukkan nama item yang ingin dicari : ";
-    cin >> namaCari;
+    cin.ignore();
+    getline(cin, namaCari);
 
     item temp = plr->backpack[35];
+    
     strcpy(plr->backpack[35].nama, namaCari.c_str());
 
     int i = 0;
@@ -177,12 +179,13 @@ void cariItem(player *plr)
     {
         i++;
     }
+    
     plr->backpack[35] = temp;
 
     if (i < 35 || strcmp(temp.nama, namaCari.c_str()) == 0)
     {
         cout << "Item " << namaCari << " ditemukan pada slot ke-" << i + 1 << endl;
-        cout << "Jumlah : " << plr->backpack[i].jumlah << "\n"
+        cout << "Jumlah     : " << plr->backpack[i].jumlah << "\n"
              << "Durability : " << plr->backpack[i].durability << "\n";
     }
     else
@@ -191,10 +194,8 @@ void cariItem(player *plr)
     }
 }
 
-// Menambahkan parameter 'berdasarkan': 1 untuk Jumlah, 2 untuk Abjad Nama
 bool tukarDulu(item itemA, item itemB, int berdasarkan)
 {
-    // Slot kosong "-" selalu dipaksa pindah ke paling bawah/belakang tas (berlaku untuk semua jenis sort)
     if (strcmp(itemA.nama, "-") == 0)
         return true;
     if (strcmp(itemB.nama, "-") == 0)
@@ -202,12 +203,10 @@ bool tukarDulu(item itemA, item itemB, int berdasarkan)
 
     if (berdasarkan == 1)
     {
-        // Sort Berdasarkan Jumlah (Paling banyak di atas / Descending)
         return itemA.jumlah < itemB.jumlah;
     }
     else
     {
-        // Sort Berdasarkan Abjad Nama (A-Z / Ascending)
         return strcmp(itemA.nama, itemB.nama) > 0;
     }
 }
@@ -355,14 +354,12 @@ int main()
                     break;
                 }
 
-                // TINGKAT 2: Pilih Metode Algoritma
                 cout << "\nPilih metode algoritma sorting:\n"
                      << "1. Bubble Sort\n"
                      << "2. Shell Sort\n"
                      << "Pilih Metode (1-2) : ";
                 cin >> pilihMetode;
 
-                // EKSEKUSI BERDASARKAN PILIHAN USER
                 if (pilihMetode == 1)
                 {
                     BubbleSort(&userAktif, pilihKategori);
@@ -376,8 +373,6 @@ int main()
                     cout << "Pilihan metode tidak valid! Sorting dibatalkan.\n";
                     break;
                 }
-
-                // SIMPAN DAN TAMPILKAN HASILNYA
                 save(&userAktif, namaFile);
                 cout << "\nSetelah item diurutkan : \n";
                 lihatInventory(&userAktif);

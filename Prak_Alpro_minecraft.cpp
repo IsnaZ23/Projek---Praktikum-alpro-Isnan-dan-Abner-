@@ -186,18 +186,19 @@ void cariItem(player *plr)
     cin.ignore();
     getline(cin, namaCari);
 
-    bool ketemu = false;
+    item temp = plr->backpack[35];
+    
+    strcpy(plr->backpack[35].nama, namaCari.c_str());
     int i = 0;
-    for (i = 0; i < 36; i++)
+    while (strcmp(plr->backpack[i].nama, namaCari.c_str()) != 0)
     {
-        if (strcmp(plr->backpack[i].nama, namaCari.c_str()) == 0)
-        {
-            ketemu = true;
-            break;
-        }
+        i++;
     }
+    
 
-    if (ketemu)
+    plr->backpack[35] = temp;
+
+    if (i < 35 || strcmp(temp.nama, namaCari.c_str()) == 0)
     {
         cout << "Item " << namaCari << " ditemukan pada slot ke-" << i + 1 << endl;
         cout << "Jumlah     : " << plr->backpack[i].jumlah << "\n"
@@ -220,7 +221,7 @@ bool tukarDulu(item itemA, item itemB, int berdasarkan)
     }
     else
     {
-        return strcmp(itemA.nama, itemB.nama) > 0;
+        return strcmp(itemA.nama, itemB.nama) < 0;
     }
 }
 
