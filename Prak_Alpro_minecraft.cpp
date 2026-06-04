@@ -27,17 +27,19 @@ void loading()
     for (int i = 0; i < 6; i++)
     {
         cout << ". " << flush;
-        Sleep(500);
+        Sleep(50);
     }
     cout << endl;
 }
 
+// Memeriksa apakah file pernah dibuat atau tidak
 bool cekFileAda(string nf)
 {
     ifstream fileCek(nf, ios::binary);
     return fileCek.is_open();
 }
 
+// Buat akun baru (File Baru)
 void buatAkunBaru(player *plr, bool *status, string nf, string np)
 {
    
@@ -48,7 +50,7 @@ void buatAkunBaru(player *plr, bool *status, string nf, string np)
         *status = false;
         return;
     }
-
+    
     ofstream fileTulis(nf, ios::out | ios::binary | ios::trunc);
     if (fileTulis.is_open())
     {
@@ -71,6 +73,7 @@ void buatAkunBaru(player *plr, bool *status, string nf, string np)
     }
 }
 
+// Login berdasarkan nama akun
 void loginAkun(player *plr, bool *status, string nf)
 {
     ifstream fileBaca(nf, ios::in | ios::binary);
@@ -89,6 +92,7 @@ void loginAkun(player *plr, bool *status, string nf)
     }
 }
 
+// Membuka Inventory 
 void lihatInventory(player *plr)
 {
     bool isiTas = false;
@@ -114,11 +118,12 @@ void lihatInventory(player *plr)
     cout << "---------------------------------------------------------------" << endl;
 }
 
+// Menambah item ke dalam inventory
 void tambahInventory(player *plr)
 {
     int slot;
     cout << "\n===Tambah Item Di 36 Slot Inventory===\n"
-         << "Pilih nomor slot di backpack ke berapa : ";
+         << "Pilih nomor slot di backpack ke berapa (1-36) : ";
     cin >> slot;
     if (slot < 1 || slot > 36)
     {
@@ -146,6 +151,7 @@ void tambahInventory(player *plr)
     }
 }
 
+// Menghapus item dari inventory
 void hapusItem(player *plr)
 {
     int slot;
@@ -178,6 +184,7 @@ void hapusItem(player *plr)
     }
 }
 
+// Mencari item menggunakan Sequential Search
 void cariItem(player *plr)
 {
     string namaCari;
@@ -187,7 +194,7 @@ void cariItem(player *plr)
     getline(cin, namaCari);
 
     item temp = plr->backpack[35];
-    
+    // Sentinel
     strcpy(plr->backpack[35].nama, namaCari.c_str());
     int i = 0;
     while (strcmp(plr->backpack[i].nama, namaCari.c_str()) != 0)
@@ -210,6 +217,7 @@ void cariItem(player *plr)
     }
 }
 
+// 
 bool tukarDulu(item itemA, item itemB, int berdasarkan)
 {
     if (strcmp(itemA.nama, "-") == 0) return true;
@@ -225,6 +233,7 @@ bool tukarDulu(item itemA, item itemB, int berdasarkan)
     }
 }
 
+// Sorting menggunakan Bubble Sort
 void BubbleSort(player *plr, int berdasarkan)
 {
     loading();
@@ -246,6 +255,7 @@ void BubbleSort(player *plr, int berdasarkan)
         cout << "Tas Berhasil dirapikan berdasarkan ABJAD NAMA item (Bubble Sort)!\n";
 }
 
+// Sorting menggunakan Shell Sort
 void ShellSort(player *plr, int berdasarkan)
 {
     loading();
@@ -269,6 +279,7 @@ void ShellSort(player *plr, int berdasarkan)
         cout << "Tas Berhasil dirapikan berdasarkan ABJAD NAMA item (Shell Sort)!\n";
 }
 
+// Save data ke akun 
 void save(player *plr, string nf)
 {
     ofstream fileDitulis(nf, ios::out | ios::binary | ios::trunc);
