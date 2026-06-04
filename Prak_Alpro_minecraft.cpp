@@ -27,7 +27,7 @@ void loading()
     for (int i = 0; i < 6; i++)
     {
         cout << ". " << flush;
-        Sleep(500);
+        Sleep(50);
     }
     cout << endl;
 }
@@ -221,7 +221,7 @@ bool tukarDulu(item itemA, item itemB, int berdasarkan)
     }
     else
     {
-        return strcmp(itemA.nama, itemB.nama) < 0;
+        return strcmp(itemA.nama, itemB.nama) > 0;
     }
 }
 
