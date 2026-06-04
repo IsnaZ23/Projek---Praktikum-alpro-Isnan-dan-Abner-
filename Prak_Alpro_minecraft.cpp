@@ -30,6 +30,7 @@ void loading()
         Sleep(200);
     }
     cout << endl;
+    
 }
 
 // Memeriksa apakah file pernah dibuat atau tidak (binary file)
