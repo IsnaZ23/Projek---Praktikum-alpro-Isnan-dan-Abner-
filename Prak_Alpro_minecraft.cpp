@@ -27,7 +27,7 @@ void loading()
     for (int i = 0; i < 6; i++)
     {
         cout << ". " << flush;
-        Sleep(50);
+        Sleep(200);
     }
     cout << endl;
 }
@@ -63,7 +63,7 @@ void buatAkunBaru(player *plr, bool *status, string nf, string np)
             plr->backpack[i].durability = 0;
         
         }
-        fileTulis.write((char *)plr, sizeof(player));
+        fileTulis.write((char *)plr, sizeof(player)); // write mengambil data binary
         fileTulis.close();
         cout << "Akun berhasil dibuat ! \n";
         *status = true;
@@ -134,7 +134,7 @@ void tambahInventory(player *plr)
     else
     {
         int i = slot - 1;
-        if (strcmp(plr->backpack[i].nama, "-") != 0)
+        if (strcmp(plr->backpack[i].nama, "-") != 0) //strcmp banding
         {
             cout << "Slot ini sudah terisi oleh " << plr->backpack[i].nama << "." << endl;
             return;
@@ -197,7 +197,7 @@ void cariItem(player *plr)
 
     item temp = plr->backpack[35];
     
-    strcpy(plr->backpack[35].nama, namaCari.c_str());
+    strcpy(plr->backpack[35].nama, namaCari.c_str()); // nah ini dimasukkan 
     int i = 0;
     while (strcmp(plr->backpack[i].nama, namaCari.c_str()) != 0)
     {
@@ -222,10 +222,10 @@ void cariItem(player *plr)
 //menukar kodingan
 bool tukarDulu(item itemA, item itemB, int berdasarkan)
 {
-    if (strcmp(itemA.nama, "-") == 0) return true;
+    if (strcmp(itemA.nama, "-") == 0) return true; // untuk sort jika kosong tukar kiri
     if (strcmp(itemB.nama, "-") == 0) return false;
 
-    if (berdasarkan == 1)
+    if (berdasarkan == 1) 
     {
         return itemA.jumlah < itemB.jumlah; 
     }
