@@ -32,7 +32,7 @@ void loading()
     cout << endl;
 }
 
-// Memeriksa apakah file pernah dibuat atau tidak
+// Memeriksa apakah file pernah dibuat atau tidak (binary file)
 bool cekFileAda(string nf)
 {
     ifstream fileCek(nf, ios::binary);
@@ -50,16 +50,18 @@ void buatAkunBaru(player *plr, bool *status, string nf, string np)
         *status = false;
         return;
     }
-    
+
     ofstream fileTulis(nf, ios::out | ios::binary | ios::trunc);
     if (fileTulis.is_open())
     {
         strcpy(plr->username, np.c_str());
+        
         for (int i = 0; i < 36; i++)
         {
             strcpy(plr->backpack[i].nama, "-");
             plr->backpack[i].jumlah = 0;
             plr->backpack[i].durability = 0;
+        
         }
         fileTulis.write((char *)plr, sizeof(player));
         fileTulis.close();
@@ -123,7 +125,7 @@ void tambahInventory(player *plr)
 {
     int slot;
     cout << "\n===Tambah Item Di 36 Slot Inventory===\n"
-         << "Pilih nomor slot di backpack ke berapa (1-36) : ";
+         << "Pilih nomor slot di backpack ke berapa : ";
     cin >> slot;
     if (slot < 1 || slot > 36)
     {
@@ -194,7 +196,7 @@ void cariItem(player *plr)
     getline(cin, namaCari);
 
     item temp = plr->backpack[35];
-    // Sentinel
+    
     strcpy(plr->backpack[35].nama, namaCari.c_str());
     int i = 0;
     while (strcmp(plr->backpack[i].nama, namaCari.c_str()) != 0)
@@ -217,7 +219,7 @@ void cariItem(player *plr)
     }
 }
 
-// 
+//menukar kodingan
 bool tukarDulu(item itemA, item itemB, int berdasarkan)
 {
     if (strcmp(itemA.nama, "-") == 0) return true;
@@ -279,7 +281,7 @@ void ShellSort(player *plr, int berdasarkan)
         cout << "Tas Berhasil dirapikan berdasarkan ABJAD NAMA item (Shell Sort)!\n";
 }
 
-// Save data ke akun 
+// Save data ke akun
 void save(player *plr, string nf)
 {
     ofstream fileDitulis(nf, ios::out | ios::binary | ios::trunc);
